@@ -1,0 +1,13 @@
+# Render Blueprint configuration.
+# Connect this repository to Render and it can create the web service.
+services:
+  - type: web
+    name: smartattend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DB_PATH
+        value: /tmp/attendance.db
