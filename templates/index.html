@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Students • SmartAttend{% endblock %}
+{% block page_title %}Student Management{% endblock %}
+{% block content %}
+<section class="hero-row compact"><div><span class="eyebrow">PEOPLE</span><h1>Student directory</h1><p>Register students once so they can use every future QR session.</p></div><a class="btn btn-secondary" href="/analytics">View analytics →</a></section>
+<section class="two-col">
+    <div class="panel">
+        <div class="panel-header"><div><span class="eyebrow">REGISTRATION</span><h2>Add student</h2><p>Roll numbers must be unique.</p></div></div>
+        <form method="post" action="/add_student" class="stack-form">
+            <label>Roll number<input name="roll_no" placeholder="CSE20260042" required></label>
+            <label>Student name<input name="name" placeholder="Aneek Pal" required></label>
+            <button class="btn btn-primary" type="submit">Add Student +</button>
+        </form>
+    </div>
+    <div class="panel directory-panel">
+        <div class="panel-header"><div><span class="eyebrow">DIRECTORY</span><h2>{{ students|length }} registered</h2></div></div>
+        <input class="search-input" id="studentSearch" placeholder="Search by name or roll number..." oninput="filterStudents()">
+        <div class="student-list" id="studentList">
+            {% for s in students %}<div class="student-row" data-search="{{ s.name|lower }} {{ s.roll_no|lower }}"><div class="avatar small">{{ s.name[0]|upper }}</div><div><strong>{{ s.name }}</strong><small>{{ s.roll_no }}</small></div><span class="status good">Registered</span></div>{% else %}<div class="empty-state">No students registered yet.</div>{% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}<script>function filterStudents(){const q=document.getElementById('studentSearch').value.toLowerCase();document.querySelectorAll('.student-row').forEach(r=>r.style.display=r.dataset.search.includes(q)?'flex':'none');}</script>{% endblock %}

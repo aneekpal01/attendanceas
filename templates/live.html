@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Live Attendance • {{ session.subject }}{% endblock %}
+{% block page_title %}Live Attendance Session{% endblock %}
+{% block content %}
+<div class="live-shell" data-session-id="{{ session.id }}" data-expires="{{ session.expires_at }}">
+    <section class="live-header">
+        <div><span class="eyebrow">CLASSROOM DISPLAY MODE</span><h1>{{ session.subject }} <span>• {{ session.class_name }}</span></h1><p>Students can scan the same QR code from their phones.</p></div>
+        <span id="liveStatus" class="badge success"><span class="live-dot"></span> SESSION ACTIVE</span>
+    </section>
+
+    <section class="live-grid">
+        <div class="qr-stage">
+            <div class="qr-frame"><img src="data:image/png;base64,{{ qr }}" alt="Attendance QR code"></div>
+            <div class="qr-caption"><strong>Scan to mark attendance</strong><span>One QR • many students • one session</span></div>
+        </div>
+
+        <div class="live-metrics panel">
+            <span class="eyebrow">REAL-TIME CHECK-IN</span>
+            <div class="big-count"><strong id="presentCount">{{ present }}</strong><span>/ <b id="totalCount">{{ total }}</b> present</span></div>
+            <div class="progress-track"><div id="progressBar" class="progress-value" style="width: {{ percentage }}%"></div></div>
+            <div class="metric-row"><span>Attendance</span><strong id="percentage">{{ percentage }}%</strong></div>
+            <div class="metric-row"><span>Time remaining</span><strong id="countdown">--:--</strong></div>
+            <div class="metric-row"><span>Subject</span><strong>{{ session.subject }}</strong></div>
+            <a class="btn btn-secondary" href="/session/{{ session.id }}">View Attendance List →</a>
+            <p class="helper">The dashboard refreshes automatically every 2 seconds. No manual refresh is needed.</p>
+        </div>
+    </section>
+
+    <div class="display-tip"><span>💡</span><div><strong>Hackathon demo tip</strong><small>Open this page on a projector or second screen. Students scan the large QR and the counter will move live.</small></div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='live.js') }}"></script>{% endblock %}

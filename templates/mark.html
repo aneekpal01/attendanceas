@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Mark Attendance • SmartAttend{% endblock %}
+{% block page_title %}Student Check-in{% endblock %}
+{% block content %}
+<div class="student-page">
+    <div class="student-card">
+        <div class="student-logo">SA</div>
+        {% if expired %}
+            <span class="eyebrow">SESSION CLOSED</span>
+            <h1>This QR has expired</h1>
+            <p class="muted">Ask your teacher to start a new attendance session.</p>
+            <a class="btn btn-secondary full" href="/">Return home</a>
+        {% elif error %}
+            <span class="eyebrow">CHECK-IN ERROR</span>
+            <h1>We couldn't mark you in</h1>
+            <div class="error-box">{{ error }}</div>
+            <button class="btn btn-primary full" onclick="history.back()">Try again</button>
+        {% else %}
+            <span class="eyebrow">ATTENDANCE SESSION</span>
+            <h1>{{ session.subject }}</h1>
+            <div class="student-session-meta"><span>{{ session.class_name }}</span><span>•</span><span>QR session active</span></div>
+            <div class="secure-pill">🔒 Secure session</div>
+            <form method="post" class="student-form">
+                <label>Roll number<input name="roll_no" placeholder="e.g. CSE20260042" required autofocus autocomplete="off"></label>
+                <button class="btn btn-primary full" type="submit">Mark Attendance ✓</button>
+            </form>
+            <small class="muted center">Your roll number is used to match your registered student record.</small>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

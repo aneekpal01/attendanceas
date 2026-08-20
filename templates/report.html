@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Reports • SmartAttend{% endblock %}
+{% block page_title %}Attendance Reports{% endblock %}
+{% block content %}
+<section class="hero-row compact"><div><span class="eyebrow">EXPORTABLE DATA</span><h1>Attendance report</h1><p>A clean overview of every student's overall attendance.</p></div><a class="btn btn-primary" href="/export.csv">↓ Download CSV</a></section>
+<div class="panel"><div class="report-table"><div class="table-row table-head"><span>Roll No.</span><span>Student</span><span>Present</span><span>Total</span><span>Percentage</span></div>{% for r in rows %}<div class="table-row"><span>{{ r.roll_no }}</span><span><strong>{{ r.name }}</strong></span><span>{{ r.present }}</span><span>{{ r.total }}</span><span><strong>{{ "%.1f"|format(r.present * 100 / r.total) if r.total else "0.0" }}%</strong></span></div>{% else %}<div class="empty-state">No report data yet.</div>{% endfor %}</div></div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Session • {{ session.subject }}{% endblock %}
+{% block page_title %}Session Details{% endblock %}
+{% block content %}
+<section class="hero-row compact"><div><span class="eyebrow">SESSION</span><h1>{{ session.subject }} <span class="muted">• {{ session.class_name }}</span></h1><p>Created {{ session.created_at|replace('T',' ') }} • Expires {{ session.expires_at|replace('T',' ') }}</p></div><a class="btn btn-secondary" href="/live/{{ session.id }}">Open live display →</a></section>
+<div class="panel"><div class="panel-header"><div><span class="eyebrow">CHECK-INS</span><h2>{{ rows|length }} students present</h2></div></div><div class="report-table"><div class="table-row table-head"><span>Roll No.</span><span>Student</span><span>Marked At</span></div>{% for r in rows %}<div class="table-row"><span>{{ r.roll_no }}</span><span><strong>{{ r.name }}</strong></span><span>{{ r.marked_at|replace('T',' ') }}</span></div>{% else %}<div class="empty-state">Nobody has marked attendance yet.</div>{% endfor %}</div></div>
+{% endblock %}

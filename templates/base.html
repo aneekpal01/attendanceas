@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#090b11">
+    <title>{% block title %}SmartAttend{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="brand-mark">SA</div>
+            <div>
+                <strong>SmartAttend</strong>
+                <span>QR Attendance</span>
+            </div>
+            <button class="icon-btn mobile-only" onclick="toggleSidebar()">×</button>
+        </div>
+
+        <nav class="nav-list">
+            <a href="/teacher" class="nav-link"><span>⌂</span> Dashboard</a>
+            <a href="/teacher#start" class="nav-link"><span>▣</span> Attendance</a>
+            <a href="/" class="nav-link"><span>♙</span> Students</a>
+            <a href="/analytics" class="nav-link"><span>◒</span> Analytics</a>
+            <a href="/report" class="nav-link"><span>▤</span> Reports</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="mini-card">
+                <span class="live-dot"></span>
+                <div><strong>System online</strong><small>Ready for attendance</small></div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="page-area">
+        <header class="topbar">
+            <button class="icon-btn mobile-only" onclick="toggleSidebar()">☰</button>
+            <div class="topbar-title">
+                <span class="eyebrow">SMARTATTEND • HACKATHON BUILD</span>
+                <strong>{% block page_title %}Attendance Command Center{% endblock %}</strong>
+            </div>
+            <div class="topbar-actions">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">☼</button>
+                <div class="avatar">T</div>
+                <div class="user-chip"><strong>Teacher</strong><small>Administrator</small></div>
+            </div>
+        </header>
+
+        <main class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="toast {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

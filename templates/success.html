@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Attendance Confirmed • SmartAttend{% endblock %}
+{% block page_title %}Attendance Confirmed{% endblock %}
+{% block content %}
+<div class="student-page">
+    <div class="success-card">
+        <div class="success-check">✓</div>
+        <span class="eyebrow">CHECK-IN COMPLETE</span>
+        <h1>{% if already %}Already marked{% else %}Attendance marked{% endif %}</h1>
+        <p>Welcome, <strong>{{ student.name }}</strong>.</p>
+        <div class="confirmation-grid"><div><small>Subject</small><strong>{{ session.subject }}</strong></div><div><small>Class</small><strong>{{ session.class_name }}</strong></div><div><small>Roll No.</small><strong>{{ student.roll_no }}</strong></div></div>
+        <div class="success-message">{% if already %}Your attendance was already recorded for this session.{% else %}You're officially marked present for this session. 🎉{% endif %}</div>
+    </div>
+</div>
+{% endblock %}
