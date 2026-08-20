@@ -217,12 +217,55 @@ def add_student():
 
 @app.route("/teacher")
 def teacher():
+    """
+    Teacher dashboard entry point.
+
+    IMPORTANT:
+    The premium teacher.html template expects one variable named
+    `data`, so we pass the complete dashboard dictionary as
+    `data=data` instead of expanding it with **data.
+    """
     conn = get_db()
     try:
         data = get_dashboard_data(conn)
     finally:
         conn.close()
-    return render_template("teacher.html", **data)
+
+    return render_template("teacher.html", data=data)
+
+
+@app.route("/dashboard")
+def dashboard():
+    """
+    Premium dashboard page.
+
+    base.html links the Dashboard button to /dashboard.
+    This route was missing in the previous version.
+    """
+    conn = get_db()
+    try:
+        data = get_dashboard_data(conn)
+    finally:
+        conn.close()
+
+    return render_template("dashboard.html", data=data)
+
+
+@app.route("/attendance")
+def attendance():
+    """
+    Attendance control center.
+
+    attendance.html also expects the complete dashboard
+    dictionary through the `data` variable.
+    """
+    conn = get_db()
+    try:
+        data = get_dashboard_data(conn)
+    finally:
+        conn.close()
+
+    return render_template("attendance.html", data=data)
 
 
 @app.route("/create_session", methods=["POST"])
@@ -480,6 +523,19 @@ def session_details(session_id):
         conn.close()
 
     return render_template("session.html", session=attendance_session, rows=rows)
+
+
+# =========================================================
+# OPTIONAL FAVICON
+# =========================================================
+
+@app.route("/favicon.ico")
+def favicon():
+    """
+    The browser automatically requests /favicon.ico.
+    Returning an empty 204 response avoids a harmless 404.
+    """
+    return Response(status=204)
 
 
 # =========================================================
